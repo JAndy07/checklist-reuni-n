@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>App Reunión</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#151525">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="glass-container">
+
+    <div id="pantalla-login" class="pantalla activa">
+      <div class="login-box">
+        <div class="candado">🔒</div>
+        <h2>Acceso Restringido</h2>
+        <p>Ingresa la contraseña para continuar</p>
+
+        <input type="password" id="input-pass" placeholder="Contraseña..." onkeypress="verificarEnter(event)">
+        <button onclick="verificarPassword()" class="btn-login">Ingresar</button>
+        <p id="error-msg" class="error-msg"></p>
+      </div>
+    </div>
+
+    <header id="main-header" style="display:none;">
+      <h1 id="titulo-principal">✨ Reunión</h1>
+      <p id="subtitulo">Selecciona tu rol</p>
+    </header>
+
+    <div id="rol-selector" class="pantalla">
+      <div class="grid-roles">
+        <button onclick="seleccionarRol('acomodador')" class="glass-btn">
+          <div class="emoji">👔</div>
+          <span>Acomodador</span>
+        </button>
+        <button onclick="seleccionarRol('plataforma')" class="glass-btn">
+          <div class="emoji">🎤</div>
+          <span>Plataforma</span>
+        </button>
+      </div>
+
+      <button onclick="abrirEmergencias()" class="btn-sos-trigger">
+        🚨 Números de Emergencia
+      </button>
+    </div>
+
+    <div id="lista-tareas" class="pantalla">
+      <div id="contenedor-tareas"></div>
+
+      <div class="acciones-footer">
+        <button onclick="window.history.back()" class="btn-volver-footer">← Volver</button>
+        <button onclick="limpiarTodo()" class="btn-reset">Limpiar todo</button>
+      </div>
+    </div>
+
+    <div id="pantalla-emergencias" class="pantalla">
+
+      <h2 class="titulo-rojo">🆘 Emergencias</h2>
+      <p class="texto-aviso">Toca un botón para llamar</p>
+
+      <div class="grid-emergencia">
+        <a href="tel:911" class="btn-call btn-911">
+          <div class="icono-call">👮‍♂️</div>
+          <div class="info-call">
+            <span class="num">911</span>
+            <span class="desc">Policía / General</span>
+          </div>
+        </a>
+        <a href="tel:01142972222" class="btn-call btn-bomberos">
+          <div class="icono-call">🔥</div>
+          <div class="info-call">
+            <span class="num">Bomberos</span>
+            <span class="desc">Longchamps</span>
+          </div>
+        </a>
+        <a href="tel:107" class="btn-call btn-same">
+          <div class="icono-call">🚑</div>
+          <div class="info-call">
+            <span class="num">107</span>
+            <span class="desc">Ambulancia (SAME)</span>
+          </div>
+        </a>
+        <a href="tel:147" class="btn-call btn-muni">
+          <div class="icono-call">📢</div>
+          <div class="info-call">
+            <span class="num">147</span>
+            <span class="desc">Alerta Brown</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="acciones-footer">
+        <button onclick="window.history.back()" class="btn-volver-footer">← Volver al inicio</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

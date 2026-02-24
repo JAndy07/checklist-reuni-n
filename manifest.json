@@ -1,0 +1,16 @@
+{
+  "name": "Tareas Reunión",
+  "short_name": "Tareas",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#151525",
+  "theme_color": "#151525",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
