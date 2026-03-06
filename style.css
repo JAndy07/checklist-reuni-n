@@ -14,7 +14,6 @@ body {
   margin: 0;
   color: white;
   overflow-x: hidden;
-  /* Bloquear gestos de zoom extraños */
   touch-action: manipulation; 
   -webkit-text-size-adjust: 100%;
 }
@@ -41,10 +40,9 @@ body {
   border-radius: 24px;
   box-shadow: var(--glass-shadow);
   padding: 25px;
-  /* Ancho más responsivo para evitar márgenes grandes en móviles */
   width: 85%; 
   max-width: 450px;
-  min-height: 80vh; /* Ocupa más alto de pantalla */
+  min-height: 80vh; 
   display: flex;
   flex-direction: column;
   position: relative;
@@ -110,7 +108,19 @@ h1 { margin: 0; font-weight: 600; }
   margin-bottom: 10px; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
 }
 .tarea-item:hover { background: rgba(255, 255, 255, 0.15); }
-.tarea-item.completada { opacity: 0.5; background: rgba(0, 0, 0, 0.1); text-decoration: line-through; }
+
+/* AQUÍ SE ARREGLA EL TACHADO */
+.tarea-item.completada { 
+  opacity: 0.6; 
+  background: rgba(0, 0, 0, 0.15); 
+  /* Ya no está el text-decoration aquí */
+}
+
+/* Ahora el tachado solo se aplica al texto */
+.tarea-item.completada span { 
+  text-decoration: line-through; 
+  color: rgba(255,255,255,0.5); /* Hace que el texto se vea un poco más apagado */
+}
 
 .tarea-item input {
   appearance: none; width: 22px; height: 22px;
@@ -123,11 +133,7 @@ h1 { margin: 0; font-weight: 600; }
 
 /* --- NUEVOS BOTONES FOOTER --- */
 .acciones-footer {
-  margin-top: auto; /* Empuja todo hacia abajo */
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 20px;
+  margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 20px;
 }
 
 .btn-reset {
