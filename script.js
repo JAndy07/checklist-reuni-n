@@ -54,27 +54,21 @@ function mostrarApp() {
   pantallaLogin.classList.remove('activa');
   pantallaSelector.classList.add('activa');
   header.style.display = 'block';
-  // Reemplazamos el historial actual para que sea la "base"
   history.replaceState({view: 'menu'}, 'Menu', '#menu');
 }
 
 // --- GESTIÓN DEL HISTORIAL (Gesto de volver) ---
 window.onpopstate = function(event) {
-  // Cuando el usuario hace el gesto "atrás", volvemos al menú
-  // Ocultamos todas las pantallas secundarias
   pantallaLista.classList.remove('activa');
   pantallaEmergencias.classList.remove('activa');
 
-  // Mostramos el selector principal
   pantallaSelector.classList.add('activa');
   tituloPrincipal.textContent = "✨ Reunión";
   subtitulo.style.display = "block";
 };
 
 // --- NAVEGACIÓN ---
-
 function abrirEmergencias() {
-  // Agregamos un estado al historial para que el gesto "atrás" funcione
   history.pushState({view: 'emergencias'}, 'Emergencias', '#emergencias');
 
   pantallaSelector.classList.remove('activa');
@@ -84,7 +78,6 @@ function abrirEmergencias() {
 }
 
 function seleccionarRol(rol) {
-  // Agregamos un estado al historial
   history.pushState({view: 'lista'}, 'Lista', '#lista');
 
   pantallaSelector.classList.remove('activa');
@@ -97,16 +90,14 @@ function seleccionarRol(rol) {
   generarLista(rol);
 }
 
-// Nota: Ya no necesitamos las funciones "volver()" o "cerrarEmergencias()" 
-// porque los botones ahora llaman a window.history.back(), 
-// lo cual dispara el evento window.onpopstate de arriba.
-
 function generarLista(rol) {
   contenedorTareas.innerHTML = "";
   const tareas = DATOS[rol];
 
   const grupos = {};
-  tareas.forEach(t => {
+  // Le agregamos un índice a cada tarea para identificarla en la memoria
+  tareas.forEach((t, index) => {
+    t.idUnico = `${rol}-${index}`; 
     if (!grupos[t.momento]) grupos[t.momento] = [];
     grupos[t.momento].push(t);
   });
@@ -122,10 +113,22 @@ function generarLista(rol) {
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
+      checkbox.id = tarea.idUnico; // Le asignamos el ID al checkbox
+
+      // MAGIA: Revisar la memoria al cargar
+      if (localStorage.getItem(tarea.idUnico) === 'true') {
+        checkbox.checked = true;
+        label.classList.add('completada');
+      }
 
       checkbox.onchange = function() {
-        if(this.checked) label.classList.add('completada');
-        else label.classList.remove('completada');
+        if(this.checked) {
+          label.classList.add('completada');
+          localStorage.setItem(tarea.idUnico, 'true'); // Guardar en memoria
+        } else {
+          label.classList.remove('completada');
+          localStorage.setItem(tarea.idUnico, 'false'); // Borrar de memoria
+        }
       };
 
       const texto = document.createElement('span');
@@ -140,10 +143,12 @@ function generarLista(rol) {
   }
 }
 
+// Actualizamos el botón de limpiar para que también borre la memoria
 function limpiarTodo() {
   const checks = document.querySelectorAll('input[type="checkbox"]');
   checks.forEach(c => {
     c.checked = false;
     c.parentNode.classList.remove('completada');
+    localStorage.removeItem(c.id); // Borrar el estado específico de esta tarea en memoria
   });
 }
